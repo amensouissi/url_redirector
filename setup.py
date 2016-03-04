@@ -44,7 +44,6 @@ setupkw = dict(
     include_package_data=True,
     zip_safe=False,
     install_requires=requires,
-    test_suite="deform_treepy.tests",
     )
 
 # to update catalogs, use babel and lingua !
