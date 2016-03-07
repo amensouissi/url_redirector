@@ -1,5 +1,6 @@
 
 from zope.interface import implementer
+from pyramid.httpexceptions import HTTPFound
 
 from persistent import Persistent
 from BTrees.OOBTree import OOBTree, OOSet
@@ -275,11 +276,17 @@ class RedirectionStorage(Persistent):
         new_path = self._canonical(new_path)
         return [a for a in self._rpaths.get(new_path, [])]
 
-    def redirect_urls(self, request):
-        new_paths = self.redirects(request.path)
-        urls = [request.resource_url(request.root, new_path)
-                for new_path in new_paths]
-        return urls
+    def redirect_url(self, request, view_name=''):
+        new_path = self.get(request.path.replace(view_name, ''))
+        if not new_path:
+            return None
+        new_path = new_path+'/'+view_name
+        if new_path.startswith('/'):
+            new_path = new_path[1:]
+
+        elements = new_path.split('/')
+        return HTTPFound(
+            request.resource_url(request.root, *elements))
 
     def _canonical(self, path):
         if path.endswith('/'):
