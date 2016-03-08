@@ -50,5 +50,5 @@ class IObjectRemoved(IObjectEvent):
 class ObjectRemoved(object): # pragma: no cover
     """ An event sent when an object has been removed."""
     def __init__(self, obj, parent):
-        self.object = obj
+        self.obj = obj
         self.parent = parent
