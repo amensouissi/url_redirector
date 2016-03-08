@@ -43,6 +43,8 @@ class IObjectRemoved(IObjectEvent):
     """ An event type sent when an object is removed """
     obj = Attribute('The object being meved')
 
+    parent = Attribute('The parent')
+
 
 @implementer(IObjectRemoved)
 class ObjectRemoved(object): # pragma: no cover
